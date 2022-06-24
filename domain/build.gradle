@@ -1,0 +1,23 @@
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+}
+
+kotlin {
+    jvm()
+    // iosArm64()
+    // I don't have an ios device, so try on simulator instead
+    // iosX64()
+    sourceSets {
+        commonTest {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test-common")
+                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-test-junit"
+            }
+        }
+    }
+}
