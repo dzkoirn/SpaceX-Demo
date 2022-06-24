@@ -1,6 +1,6 @@
-plugins {
-    id 'org.jetbrains.kotlin.multiplatform'
-}
+apply plugin: 'kotlin-multiplatform'
+
+def ktor_version = "2.0.2"
 
 kotlin {
     jvm()
@@ -11,19 +11,20 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":domain"))
-                implementation("io.ktor:ktor-client-core:2.0.2")
+                implementation("io.ktor:ktor-client-core:$ktor_version")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
             }
         }
         commonTest {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test-common")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
-                implementation("io.mockk:mockk:1.12.4")
             }
         }
         jvmMain {
             dependencies {
-                implementation("io.ktor:ktor-client-okhttp:2.0.2")
+                implementation("io.ktor:ktor-client-okhttp:$ktor_version")
             }
         }
         jvmTest {
