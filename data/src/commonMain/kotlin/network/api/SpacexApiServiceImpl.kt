@@ -5,7 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import spacexdemo.domain.dto.CompanyInfo
 import spacexdemo.domain.dto.Launch
-import spacexdemo.domain.dto.SpacexApiService
+import spacexdemo.domain.api.SpacexApiService
 
 private const val ALL = "https://api.spacexdata.com/v5/launches"
 private const val COMPANY = "https://api.spacexdata.com/v4/company"
