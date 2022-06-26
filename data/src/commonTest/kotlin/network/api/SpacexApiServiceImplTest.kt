@@ -2,6 +2,7 @@ package network.api
 
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
@@ -16,6 +17,14 @@ class SpacexApiServiceImplTest {
         runBlocking {
             val result = testService.all()
             assertTrue("returned result is not empty") { result.isNotEmpty() }
+        }
+    }
+
+    @Test
+    fun `test company info api works`() {
+        runBlocking {
+            val result = testService.company()
+            assertNotNull(result, "returned result is present")
         }
     }
 }
