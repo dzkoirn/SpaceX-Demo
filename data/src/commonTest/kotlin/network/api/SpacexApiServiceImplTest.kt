@@ -1,6 +1,5 @@
 package network.api
 
-import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -10,8 +9,7 @@ import kotlin.test.assertTrue
  */
 class SpacexApiServiceImplTest {
 
-    private val httpClient: HttpClient = HttpClient()
-    private val testService = SpacexApiServiceImpl(httpClient)
+    private val testService = SpacexApiServiceImpl(provideHttpClient())
 
     @Test
     fun `test receiving all launches api works`() {
