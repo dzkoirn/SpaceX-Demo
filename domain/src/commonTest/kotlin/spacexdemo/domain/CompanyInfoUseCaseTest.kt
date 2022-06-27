@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 
 class CompanyInfoUseCaseTest {
 
-    val fakeCompanyInfo = CompanyInfo(
+    private val fakeCompanyInfo = CompanyInfo(
         name ="Fake Inc.",
         founder = "Founder Founder",
         founded = 2000,
@@ -37,18 +37,9 @@ class CompanyInfoUseCaseTest {
         summary = "Fake object for testing"
     )
 
-
-    class FakeRepo (
-        private val info: CompanyInfo
-    ) : Repo<CompanyInfo> {
-        var callCounter: Int = 0
-            private set
-        override suspend fun get(): CompanyInfo = info.also { callCounter++ }
-    }
-
     @Test
     fun `test that use case call Repo actually`() {
-        val fakeRepo = FakeRepo(fakeCompanyInfo)
+        val fakeRepo = TestRepo { fakeCompanyInfo }
         val testUseCase = CompanyInfoUseCase(fakeRepo)
         runBlocking {
             val result = testUseCase.getCompanyInfo()
