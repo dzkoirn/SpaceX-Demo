@@ -1,41 +1,33 @@
-apply plugin: 'kotlin-multiplatform'
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
 
 def ktor_version = "2.0.2"
 
-kotlin {
-    jvm {
-        compilations.main.kotlinOptions {
-            // Setup the Kotlin compiler options for the 'main' compilation:
-            jvmTarget = "11"
-        }
-    }
-    // iosArm64()
-    // I don't have an ios device, so try on simulator instead
-    // iosX64()
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":domain"))
-                api("io.ktor:ktor-client-core:$ktor_version")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-common")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
-            }
-        }
-        jvmMain {
-            dependencies {
-                implementation("io.ktor:ktor-client-okhttp:$ktor_version")
-            }
-        }
-        jvmTest {
-            dependencies {
-                implementation "org.jetbrains.kotlin:kotlin-test-junit"
-            }
-        }
-    }
+dependencies {
+    implementation(project(":domain"))
+    api("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-okhttp:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }

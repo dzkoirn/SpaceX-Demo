@@ -2,13 +2,23 @@ package app.spacexdemo.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.spacexdemo.di.ServiceContainer
+import org.koin.core.Koin
+import org.koin.core.error.NoBeanDefFoundException
+import org.koin.dsl.module
+
+val mainScreenModule = module {
+    factory { MainViewModel(get(), get()) }
+}
 
 class MainViewViewModelFactory(
-    val serviceContainer: ServiceContainer
+    private val di: Koin
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MainViewModel(serviceContainer.provideCompanyInfoUseCase(), serviceContainer.provideLaunchesUseCase()) as T
+        return try {
+            di.get(modelClass.kotlin)
+        } catch (ex: NoBeanDefFoundException) {
+            throw NotImplementedError("ViewModel for ${modelClass.simpleName} is not implemented")
+        }
     }
 }

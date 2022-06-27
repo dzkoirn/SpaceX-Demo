@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import app.spacexdemo.R
-import app.spacexdemo.di.ServiceContainer
+import app.spacexdemo.di.DI
 
 class MainFragment : Fragment() {
 
@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, MainViewViewModelFactory(ServiceContainer)).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, MainViewViewModelFactory(DI.getKoin())).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
