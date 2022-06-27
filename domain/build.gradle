@@ -4,15 +4,20 @@ plugins {
 }
 
 kotlin {
-    jvm()
+    jvm {
+        compilations.main.kotlinOptions {
+            // Setup the Kotlin compiler options for the 'main' compilation:
+            jvmTarget = "11"
+        }
+    }
     // iosArm64()
     // I don't have an ios device, so try on simulator instead
     // iosX64()
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
             }
         }
         commonTest {

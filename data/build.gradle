@@ -3,7 +3,12 @@ apply plugin: 'kotlin-multiplatform'
 def ktor_version = "2.0.2"
 
 kotlin {
-    jvm()
+    jvm {
+        compilations.main.kotlinOptions {
+            // Setup the Kotlin compiler options for the 'main' compilation:
+            jvmTarget = "11"
+        }
+    }
     // iosArm64()
     // I don't have an ios device, so try on simulator instead
     // iosX64()
@@ -11,7 +16,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":domain"))
-                implementation("io.ktor:ktor-client-core:$ktor_version")
+                api("io.ktor:ktor-client-core:$ktor_version")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
             }
