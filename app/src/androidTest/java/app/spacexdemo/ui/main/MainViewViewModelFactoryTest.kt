@@ -3,8 +3,6 @@ package app.spacexdemo.ui.main
 import androidx.lifecycle.ViewModel
 import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import spacexdemo.domain.CompanyInfoUseCase
