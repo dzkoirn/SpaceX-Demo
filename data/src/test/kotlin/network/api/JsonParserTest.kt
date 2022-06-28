@@ -5,10 +5,9 @@ import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import spacexdemo.domain.dto.CompanyInfo
-import spacexdemo.domain.dto.Headquarters
-import spacexdemo.domain.dto.Launch
-import spacexdemo.domain.dto.Links
+import spacexdemo.domain.dto.*
+import spacexdemo.domain.dto.CompanyInfo.Headquarters
+import spacexdemo.domain.dto.CompanyInfo.Links
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
@@ -63,6 +62,34 @@ class JsonParserTest {
         )
         val result = json.decodeFromString<CompanyInfo>(readJsonAsString("company_info.json"))
         assertEquals(expected, result)
+    }
+
+    @Test
+    fun `parse rockets`() {
+        val expected = listOf(
+            Rocket(
+                id = "5e9d0d95eda69955f709d1eb",
+                name = "Falcon 1",
+                type = "rocket",
+            ),
+            Rocket(
+                id= "5e9d0d95eda69973a809d1ec",
+                name = "Falcon 9",
+                type =  "rocket",
+            ),
+            Rocket(
+                id = "5e9d0d95eda69974db09d1ed",
+                name = "Falcon Heavy",
+                type = "rocket",
+            ),
+            Rocket(
+                id = "5e9d0d96eda699382d09d1ee",
+                name = "Starship",
+                type = "rocket",
+            )
+        )
+        val result = json.decodeFromString<List<Rocket>>(readJsonAsString("rockets.json"))
+        assertIterableEquals(expected, result)
     }
 
     private fun readJsonAsString(name: String): String {

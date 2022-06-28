@@ -9,21 +9,24 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import spacexdemo.domain.CompanyInfoUseCase
 import spacexdemo.domain.LaunchesUseCase
-import spacexdemo.domain.dto.Launch
 
 class MainViewModel(
     private val companyInfoUseCase: CompanyInfoUseCase,
     private val launchesUseCase: LaunchesUseCase
 ) : ViewModel() {
 
-    private val _companyInfo = MutableLiveData<List<Launch>>()
-    val companyInfo: LiveData<List<Launch>>
-        get() = _companyInfo
+    private val _state = MutableLiveData<MainScreenState>()
+    val screenState: LiveData<MainScreenState>
+        get() = _state
 
-    fun loadList() {
+    fun loadData() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _companyInfo.postValue(launchesUseCase.getLaunches())
+                _state.postValue(MainScreenState.Loading)
+                _state.postValue(MainScreenState.ScreenData(
+                    companyInfoUseCase.getCompanyInfo(),
+                    launchesUseCase.getLaunches()
+                ))
             }
         }
     }

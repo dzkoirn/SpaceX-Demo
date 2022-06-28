@@ -37,7 +37,7 @@ class CachedRepoTest {
 
     @Test
     fun `test that data actually cached`() {
-        val testRepo = CachedRepo(stubDataSource::get)
+        val testRepo = object : CachedRepo<FakeData>(stubDataSource::get) { }
         runBlocking {
             repeat(5) {
                 testRepo.get()

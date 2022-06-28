@@ -27,4 +27,12 @@ class SpacexApiServiceImplTest {
             assertNotNull(result, "returned result is present")
         }
     }
+
+    @Test
+    fun `test rockets api works`() {
+        runBlocking {
+            val result = testService.rockets()
+            assertNotNull(result, "returned result is present")
+        }
+    }
 }

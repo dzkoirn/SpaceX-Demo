@@ -23,19 +23,21 @@ data class CompanyInfo(
     val headquarters: Headquarters,
     val links: Links,
     val summary: String
-)
+) {
+    @Serializable
+    data class Headquarters(
+        val address: String,
+        val city: String,
+        val state: String
+    )
 
-@Serializable
-data class Headquarters(
-    val address: String,
-    val city: String,
-    val state: String
-)
+    @Serializable
+    data class Links(
+        val website: String,
+        val flickr: String,
+        val twitter: String,
+        @SerialName("elon_twitter") val elonTwitter: String
+    )
+}
 
-@Serializable
-data class Links(
-    val website: String,
-    val flickr: String,
-    val twitter: String,
-    @SerialName("elon_twitter") val elonTwitter: String
-)
+

@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import app.spacexdemo.R
-import spacexdemo.domain.dto.Launch
+import spacexdemo.domain.dto.LaunchInfo
 
-class LaunchListAdapter : ListAdapter<Launch, LaunchViewHolder>(LaunchDiffCallBack) {
+class LaunchListAdapter : ListAdapter<LaunchInfo, LaunchViewHolder>(LaunchDiffCallBack) {
+
+    private val mapper = LaunchInfoMapper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.launch_list_item, parent, false)
@@ -15,15 +17,15 @@ class LaunchListAdapter : ListAdapter<Launch, LaunchViewHolder>(LaunchDiffCallBa
     }
 
     override fun onBindViewHolder(holder: LaunchViewHolder, position: Int) {
-       holder.bind(getItem(position))
+       holder.bind(mapper.map(holder.itemView.context, getItem(position)))
     }
 
 }
 
-private object LaunchDiffCallBack : DiffUtil.ItemCallback<Launch>() {
+private object LaunchDiffCallBack : DiffUtil.ItemCallback<LaunchInfo>() {
 
-    override fun areItemsTheSame(oldItem: Launch, newItem: Launch): Boolean = oldItem == newItem
+    override fun areItemsTheSame(oldItem: LaunchInfo, newItem: LaunchInfo): Boolean = oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: Launch, newItem: Launch): Boolean = oldItem == newItem
+    override fun areContentsTheSame(oldItem: LaunchInfo, newItem: LaunchInfo): Boolean = oldItem == newItem
 
 }

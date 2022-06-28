@@ -13,6 +13,7 @@ import spacexdemo.domain.LaunchesUseCase
 import storage.CachedRepo
 import storage.CompanyInfoRepo
 import storage.LaunchesRepo
+import storage.RocketsRepo
 
 object DI : KoinComponent {
 
@@ -21,8 +22,9 @@ object DI : KoinComponent {
             factory { provideHttpClient() }
             factory { SpacexApiService(get()) }
             single { LaunchesRepo(get()) }
+            single { RocketsRepo(get()) }
             single { CompanyInfoRepo(get()) }
-            factory { LaunchesUseCase(get<LaunchesRepo>()) }
+            factory { LaunchesUseCase(get<LaunchesRepo>(), get<RocketsRepo>()) }
             factory { CompanyInfoUseCase(get<CompanyInfoRepo>()) }
         }
     }

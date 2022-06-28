@@ -4,8 +4,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import spacexdemo.domain.dto.CompanyInfo
-import spacexdemo.domain.dto.Headquarters
-import spacexdemo.domain.dto.Links
+import spacexdemo.domain.dto.CompanyInfo.Headquarters
+import spacexdemo.domain.dto.CompanyInfo.Links
 
 class CompanyInfoUseCaseTest {
 

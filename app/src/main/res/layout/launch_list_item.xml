@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@mipmap/ic_launcher"/>
+
+    <ImageView
+        android:id="@+id/success_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/ic_successfull"/>
 
     <TextView
         android:id="@+id/mission_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@id/path"
+        app:layout_constraintLeft_toRightOf="@id/path"
+        app:layout_constraintRight_toLeftOf="@id/success_mark"
+        tools:text="Mission name: Apollo 11"/>
+
+    <TextView
+        android:id="@+id/datetime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/mission_name"
+        app:layout_constraintLeft_toRightOf="@id/path"
+        app:layout_constraintRight_toLeftOf="@id/success_mark"
+        tools:text="Datetime: July 16, 1969 at 2:32 PM GMT+1"/>
+
+    <TextView
+        android:id="@+id/rocket"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/datetime"
+        app:layout_constraintLeft_toRightOf="@id/path"
+        app:layout_constraintRight_toLeftOf="@id/success_mark"
+        tools:text="Rocket: Saturn V SA-506"/>
+
+    <TextView
+        android:id="@+id/days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/rocket"
+        app:layout_constraintLeft_toRightOf="@id/path"
+        app:layout_constraintRight_toLeftOf="@id/success_mark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="Days since now: 19,340 days"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

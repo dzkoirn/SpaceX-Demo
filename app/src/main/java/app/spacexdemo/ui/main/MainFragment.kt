@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.spacexdemo.R
 import app.spacexdemo.di.DI
+import app.spacexdemo.ui.main.info.CompanyInfoAdapter
 import app.spacexdemo.ui.main.list.LaunchListAdapter
 
 class MainFragment : Fragment() {
@@ -19,7 +23,11 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var list: RecyclerView
+    protected lateinit var progress: ProgressBar
+
     private lateinit var listAdapter: LaunchListAdapter
+    private lateinit var companyInfoAdapter: CompanyInfoAdapter
+
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
@@ -32,17 +40,32 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        companyInfoAdapter = CompanyInfoAdapter()
         listAdapter = LaunchListAdapter()
+
         list = view.findViewById<RecyclerView?>(R.id.list).apply {
             layoutManager = LinearLayoutManager(view.context)
-            adapter = listAdapter
+            adapter = ConcatAdapter(companyInfoAdapter, listAdapter)
         }
 
+        progress = view.findViewById(R.id.progress)
 
         viewModel = ViewModelProvider(this, MainViewViewModelFactory(DI.getKoin())).get(MainViewModel::class.java)
 
-        viewModel.companyInfo.observe(viewLifecycleOwner) { listAdapter.submitList(it) }
-        viewModel.loadList()
+        viewModel.screenState.observe(viewLifecycleOwner) { handleScreenState(it) }
+        viewModel.loadData()
     }
 
+    private fun handleScreenState(state: MainScreenState) {
+        when(state) {
+            is MainScreenState.Loading -> {
+                progress.isVisible = true
+            }
+            is MainScreenState.ScreenData -> {
+                companyInfoAdapter.setCompanyInfo(state.companyInfo)
+                listAdapter.submitList(state.list)
+                progress.isVisible = false
+            }
+        }
+    }
 }
