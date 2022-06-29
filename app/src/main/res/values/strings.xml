@@ -7,5 +7,5 @@
     <string name="date">"Date/time: %1$s at %2$s"</string>
     <string name="rocket">Rocket: %1$s/%2$s </string>
     <string name="days_since">Days since now: %1$d</string>
-    <string name="days_from">Days from now: %1$d</string>
+    <string name="days_from">Days from now: +%1$d</string>
 </resources>

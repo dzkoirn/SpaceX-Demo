@@ -20,8 +20,8 @@ class LaunchInfoMapper {
             LaunchViewItem(
                 missionName = getString(R.string.mission, info.launch.name),
                 date = getString(R.string.date, zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE), zonedDateTime.format(DateTimeFormatter.ISO_LOCAL_TIME)),
-                patch = "",
-                success = info.launch.success?.let { if (it) { R.drawable.ic_successfull } else { R.drawable.ic_failed } },
+                patch = info.launch.links?.patch?.small?.let { url -> Patch.Url(url) } ?: Patch.ResId(R.drawable.ic_no_photo),
+                successMark = info.launch.success?.let { if (it) { R.drawable.ic_successfull } else { R.drawable.ic_failed } },
                 rocket = getString(R.string.rocket, info.rocket.name, info.rocket.type),
                 days = if (info.launch.upcoming) {
                     getString(R.string.days_from, duration.toDays())
