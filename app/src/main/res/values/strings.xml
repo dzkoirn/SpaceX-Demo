@@ -8,4 +8,8 @@
     <string name="rocket">Rocket: %1$s/%2$s </string>
     <string name="days_since">Days since now: %1$d</string>
     <string name="days_from">Days from now: +%1$d</string>
+    <string name="read_article">Read article</string>
+    <string name="show_wiki">Read on wikipedia</string>
+    <string name="watch_on_youtube">Watch youtube video</string>
+    <string name="no_data_available">No any data</string>
 </resources>

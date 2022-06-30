@@ -7,7 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import app.spacexdemo.R
 import com.bumptech.glide.Glide
 
-class LaunchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class LaunchViewHolder(
+    view: View,
+    onclick: (Int) -> Unit
+) : RecyclerView.ViewHolder(view) {
+    init {
+        view.setOnClickListener { onclick(bindedPostions) }
+    }
     private val missionName = view.findViewById<TextView>(R.id.mission_name)
     private val patch = view.findViewById<ImageView>(R.id.path)
     private val success = view.findViewById<ImageView>(R.id.success_mark)
@@ -15,7 +21,13 @@ class LaunchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val rocket = view.findViewById<TextView>(R.id.rocket)
     private val days = view.findViewById<TextView>(R.id.days)
 
-    fun bind(launchViewItem: LaunchViewItem) {
+    private var bindedPostions = 0
+
+    fun bind(
+        launchViewItem: LaunchViewItem,
+        position: Int
+    ) {
+        bindedPostions = position
         missionName.text = launchViewItem.missionName
         launchViewItem.successMark?.let { success.setImageResource(it) }
         date.text = launchViewItem.date

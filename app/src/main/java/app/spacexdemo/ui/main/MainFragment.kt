@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
@@ -13,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.spacexdemo.R
 import app.spacexdemo.di.DI
+import app.spacexdemo.ui.info.LaunchInfoDetailFragment
 import app.spacexdemo.ui.main.info.CompanyInfoAdapter
 import app.spacexdemo.ui.main.list.LaunchListAdapter
+import spacexdemo.domain.dto.LaunchInfo
 
 class MainFragment : Fragment() {
 
@@ -41,7 +44,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         companyInfoAdapter = CompanyInfoAdapter()
-        listAdapter = LaunchListAdapter()
+        listAdapter = LaunchListAdapter(::handleListItemClick)
 
         list = view.findViewById<RecyclerView?>(R.id.list).apply {
             layoutManager = LinearLayoutManager(view.context)
@@ -67,5 +70,11 @@ class MainFragment : Fragment() {
                 progress.isVisible = false
             }
         }
+    }
+
+    private fun handleListItemClick(item: LaunchInfo) {
+        val instance = LaunchInfoDetailFragment.newInstance(item)
+        instance.setStyle(DialogFragment.STYLE_NORMAL, R.style.ModalDialog)
+        instance.show(parentFragmentManager, "info")
     }
 }
