@@ -1,9 +1,7 @@
 package app.spacexdemo.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -33,6 +31,11 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,6 +60,17 @@ class MainFragment : Fragment() {
 
         viewModel.screenState.observe(viewLifecycleOwner) { handleScreenState(it) }
         viewModel.loadData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+
     }
 
     private fun handleScreenState(state: MainScreenState) {

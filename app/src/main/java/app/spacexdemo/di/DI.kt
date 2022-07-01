@@ -10,10 +10,7 @@ import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import spacexdemo.domain.CompanyInfoUseCase
 import spacexdemo.domain.LaunchesUseCase
-import storage.CachedRepo
-import storage.CompanyInfoRepo
-import storage.LaunchesRepo
-import storage.RocketsRepo
+import storage.*
 
 object DI : KoinComponent {
 
@@ -24,7 +21,8 @@ object DI : KoinComponent {
             single { LaunchesRepo(get()) }
             single { RocketsRepo(get()) }
             single { CompanyInfoRepo(get()) }
-            factory { LaunchesUseCase(get<LaunchesRepo>(), get<RocketsRepo>()) }
+            single { SettingsRepo() }
+            factory { LaunchesUseCase(get<LaunchesRepo>(), get<RocketsRepo>(), get<SettingsRepo>()) }
             factory { CompanyInfoUseCase(get<CompanyInfoRepo>()) }
         }
     }
