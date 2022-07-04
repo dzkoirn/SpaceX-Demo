@@ -16,9 +16,14 @@ class LaunchesUseCase(
         val rockets = async(Dispatchers.IO) { rocketsRepo.get().associateBy { r -> r.id } }
         val launches = async(Dispatchers.IO) { launchesRepo.get() }
 
+        val filterRange = LongRange(
+            yearToEpochSeconds(settings.yearsRange.first),
+            yearToEpochSeconds(settings.yearsRange.last),
+        )
+
         rockets.await().let { rocketsMap ->
             launches.await()
-                .filter { l -> l.date_unix in settings.filterRange }
+                .filter { l -> l.date_unix in filterRange }
                 .filter { l ->
                     when (settings.launchSuccess) {
                         LaunchSuccess.ALL -> true

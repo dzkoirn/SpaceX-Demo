@@ -84,10 +84,7 @@ class LaunchesUseCaseTest {
         val fakeRocketRepo = TestRepo { fakeRockets }
         val fakeSettingsRepo = TestRepo {
             FilterSettings(
-                LongRange(
-                    LocalDate.of(2006, Month.JANUARY, 1).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.ofHours(0)),
-                    LocalDate.of(2024, Month.MAY, 1).toEpochSecond(LocalTime.NOON, ZoneOffset.ofHours(0))
-                ),
+                IntRange(2006, 2024),
                 LaunchSuccess.ALL,
                 SortOrder.ASC
             )
@@ -130,10 +127,7 @@ class LaunchesUseCaseTest {
         val fakeRocketRepo = TestRepo { fakeRockets }
         val fakeSettingsRepo = TestRepo {
             FilterSettings(
-                LongRange(
-                    LocalDate.of(2006, Month.JANUARY, 1).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.ofHours(0)),
-                    LocalDate.of(2024, Month.MAY, 1).toEpochSecond(LocalTime.NOON, ZoneOffset.ofHours(0))
-                ),
+                IntRange(2006, 2024),
                 LaunchSuccess.SUCCESSFULL,
                 SortOrder.ASC
             )
@@ -168,10 +162,7 @@ class LaunchesUseCaseTest {
         val fakeRocketRepo = TestRepo { fakeRockets }
         val fakeSettingsRepo = TestRepo {
             FilterSettings(
-                LongRange(
-                    LocalDate.of(2006, Month.JANUARY, 1).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.ofHours(0)),
-                    LocalDate.of(2024, Month.MAY, 1).toEpochSecond(LocalTime.NOON, ZoneOffset.ofHours(0))
-                ),
+                IntRange(2006, 2024),
                 LaunchSuccess.FAILED,
                 SortOrder.ASC
             )
@@ -202,10 +193,7 @@ class LaunchesUseCaseTest {
         val fakeRocketRepo = TestRepo { fakeRockets }
         val fakeSettingsRepo = TestRepo {
             FilterSettings(
-                LongRange(
-                    LocalDate.of(2006, Month.JANUARY, 1).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.ofHours(0)),
-                    LocalDate.of(2024, Month.MAY, 1).toEpochSecond(LocalTime.NOON, ZoneOffset.ofHours(0))
-                ),
+                IntRange(2006, 2024),
                 LaunchSuccess.ALL,
                 SortOrder.DESC
             )
@@ -248,10 +236,7 @@ class LaunchesUseCaseTest {
         val fakeRocketRepo = TestRepo { fakeRockets }
         val fakeSettingsRepo = TestRepo {
             FilterSettings(
-                LongRange(
-                    LocalDate.of(2010, Month.JANUARY, 1).toEpochDay() * 86400L,
-                    LocalDate.of(2022, Month.DECEMBER, 31).toEpochDay() * 86400L
-                ),
+                IntRange(2010, 2023),
                 LaunchSuccess.ALL,
                 SortOrder.ASC
             )

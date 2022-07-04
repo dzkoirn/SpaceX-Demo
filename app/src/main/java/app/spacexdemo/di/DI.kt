@@ -1,5 +1,6 @@
 package app.spacexdemo.di
 
+import app.spacexdemo.ui.filter.filterScreenModule
 import app.spacexdemo.ui.main.mainScreenModule
 import network.api.SpacexApiService
 import network.api.provideHttpClient
@@ -9,8 +10,10 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import spacexdemo.domain.CompanyInfoUseCase
+import spacexdemo.domain.FilterUseCase
 import spacexdemo.domain.LaunchesUseCase
 import storage.*
+import kotlin.math.sin
 
 object DI : KoinComponent {
 
@@ -24,6 +27,7 @@ object DI : KoinComponent {
             single { SettingsRepo() }
             factory { LaunchesUseCase(get<LaunchesRepo>(), get<RocketsRepo>(), get<SettingsRepo>()) }
             factory { CompanyInfoUseCase(get<CompanyInfoRepo>()) }
+            factory { FilterUseCase(get<SettingsRepo>()) }
         }
     }
 
@@ -31,6 +35,7 @@ object DI : KoinComponent {
         koinApplication {
             modules(appModule)
             modules(mainScreenModule)
+            modules(filterScreenModule)
         }.koin
     }
 

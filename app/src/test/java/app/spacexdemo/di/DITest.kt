@@ -1,14 +1,17 @@
 package app.spacexdemo.di
 
+import app.spacexdemo.ui.filter.FilterViewModel
 import app.spacexdemo.ui.main.MainViewModel
 import io.ktor.client.*
 import network.api.SpacexApiService
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import spacexdemo.domain.CompanyInfoUseCase
+import spacexdemo.domain.FilterUseCase
 import spacexdemo.domain.LaunchesUseCase
 import storage.CompanyInfoRepo
 import storage.LaunchesRepo
+import storage.SettingsRepo
 
 /**
  * Because Koin is runtime framework add test to test that DI Tree is valid
@@ -50,5 +53,20 @@ class DITest {
     @Test
     fun `MainViewModel is not null`() {
         assertNotNull("MainViewModel", koin.get<MainViewModel>())
+    }
+
+    @Test
+    fun `FilterViewModel is not null`() {
+        assertNotNull("FilterViewModel", koin.get<FilterViewModel>())
+    }
+
+    @Test
+    fun `SettingsRepo is not null`() {
+        assertNotNull("SettingsRepo", koin.get<SettingsRepo>())
+    }
+
+    @Test
+    fun `FilterUseCase is not null`() {
+        assertNotNull("FilterUseCase", koin.get<FilterUseCase>())
     }
 }

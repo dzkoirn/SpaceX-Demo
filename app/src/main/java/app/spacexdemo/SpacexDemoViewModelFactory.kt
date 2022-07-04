@@ -1,16 +1,11 @@
-package app.spacexdemo.ui.main
+package app.spacexdemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.koin.core.Koin
 import org.koin.core.error.NoBeanDefFoundException
-import org.koin.dsl.module
 
-val mainScreenModule = module {
-    factory { MainViewModel(get(), get()) }
-}
-
-class MainViewViewModelFactory(
+class SpacexDemoViewModelFactory(
     private val di: Koin
 ) : ViewModelProvider.Factory {
 

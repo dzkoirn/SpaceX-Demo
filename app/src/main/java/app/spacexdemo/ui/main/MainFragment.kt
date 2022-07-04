@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.spacexdemo.R
+import app.spacexdemo.SpacexDemoViewModelFactory
 import app.spacexdemo.di.DI
+import app.spacexdemo.ui.filter.FilterFragment
 import app.spacexdemo.ui.info.LaunchInfoDetailFragment
 import app.spacexdemo.ui.main.info.CompanyInfoAdapter
 import app.spacexdemo.ui.main.list.LaunchListAdapter
@@ -34,6 +36,11 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        parentFragmentManager.setFragmentResultListener("filter", this) { _, _ ->
+            // reload data
+            viewModel.loadData()
+        }
     }
 
     override fun onCreateView(
@@ -56,7 +63,7 @@ class MainFragment : Fragment() {
 
         progress = view.findViewById(R.id.progress)
 
-        viewModel = ViewModelProvider(this, MainViewViewModelFactory(DI.getKoin())).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, SpacexDemoViewModelFactory(DI.getKoin())).get(MainViewModel::class.java)
 
         viewModel.screenState.observe(viewLifecycleOwner) { handleScreenState(it) }
         viewModel.loadData()
@@ -69,8 +76,10 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-
+        return when(item.itemId) {
+            R.id.filter -> handleMenuClick()
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun handleScreenState(state: MainScreenState) {
@@ -90,5 +99,12 @@ class MainFragment : Fragment() {
         val instance = LaunchInfoDetailFragment.newInstance(item)
         instance.setStyle(DialogFragment.STYLE_NORMAL, R.style.ModalDialog)
         instance.show(parentFragmentManager, "info")
+    }
+
+    private fun handleMenuClick(): Boolean {
+        val instance = FilterFragment()
+        instance.setStyle(DialogFragment.STYLE_NORMAL, R.style.ModalDialog)
+        instance.show(parentFragmentManager, "filter")
+        return true
     }
 }

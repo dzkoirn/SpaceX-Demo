@@ -1,22 +1,20 @@
 package spacexdemo.domain.dto
 
-import java.time.*
-
 data class FilterSettings(
     /**
      * Range in seconds from start year to end year
      */
-    val filterRange: LongRange,
+    val yearsRange: IntRange,
     val launchSuccess: LaunchSuccess,
     val sortOrder: SortOrder
 ) {
     companion object {
         val DEFAULT = FilterSettings(
-            filterRange = LongRange(
+            yearsRange = IntRange(
                 // From January 2006
-                LocalDate.of(2006, Month.JANUARY, 1).toEpochDay() * 86400L,
-                // Current moment + 2 year
-                LocalDate.now().plusYears(2).toEpochDay() * 86400L
+                2006,
+                // To January 2026
+                2026
             ),
             launchSuccess = LaunchSuccess.ALL,
             sortOrder = SortOrder.ASC

@@ -13,4 +13,5 @@
     <string name="watch_on_youtube">Watch youtube video</string>
     <string name="no_data_available">No any data</string>
     <string name="filter">Filter</string>
+    <string name="sorting">Sorting order</string>
 </resources>
