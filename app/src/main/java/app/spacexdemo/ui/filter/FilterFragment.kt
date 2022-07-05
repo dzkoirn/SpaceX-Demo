@@ -1,6 +1,7 @@
 package app.spacexdemo.ui.filter
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +50,7 @@ class FilterFragment : DialogFragment() {
 
         cancelButton = view.findViewById<Button>(R.id.cancel_button).apply {
             setOnClickListener {
-                parentFragmentManager.setFragmentResult("filter", Bundle())
+                parentFragmentManager.setFragmentResult(FILTER_TAG, Bundle().setResult(Result.CANCEL))
                 dismiss()
             }
         }
@@ -70,7 +71,6 @@ class FilterFragment : DialogFragment() {
     }
 
     private fun saveSettings() {
-        parentFragmentManager.setFragmentResult("filter", Bundle())
         viewModel.save(
             FilterState(
                 startYear = slider.values.component1(),
@@ -79,6 +79,25 @@ class FilterFragment : DialogFragment() {
                 sortOrder = sortingOrder.selectedItem as SortOrder
             )
         )
+        // Log.d("DEBUG", "Dismis dialog")
+        // ORDER MATTER!!! Callback in parent activity called right after calling this method
+        parentFragmentManager.setFragmentResult("filter", Bundle().setResult(Result.SAVE))
         dismiss()
+    }
+
+    companion object Constants {
+        const val FILTER_TAG = "filter"
+        private const val RESULT_KEY = "FilterFragment_result"
+        enum class Result {
+            SAVE, CANCEL
+        }
+
+        fun Bundle.setResult(result: Result): Bundle =
+            this.apply {
+                putSerializable(RESULT_KEY, result)
+            }
+
+        fun Bundle.isResultSave(): Boolean =
+            this.getSerializable(RESULT_KEY)?.let { it == Result.SAVE } ?: false
     }
 }

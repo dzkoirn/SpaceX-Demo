@@ -26,7 +26,7 @@ class LaunchListAdapter(clickListener: (LaunchInfo) -> Unit) : ListAdapter<Launc
 
 private object LaunchDiffCallBack : DiffUtil.ItemCallback<LaunchInfo>() {
 
-    override fun areItemsTheSame(oldItem: LaunchInfo, newItem: LaunchInfo): Boolean = oldItem == newItem
+    override fun areItemsTheSame(oldItem: LaunchInfo, newItem: LaunchInfo): Boolean = oldItem === newItem
 
     override fun areContentsTheSame(oldItem: LaunchInfo, newItem: LaunchInfo): Boolean = oldItem == newItem
 

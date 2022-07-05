@@ -1,5 +1,6 @@
 package app.spacexdemo.ui.filter
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +40,7 @@ class FilterViewModel(
                     sortOrder = filterState.sortOrder
                 )
             )
+
         }
     }
 

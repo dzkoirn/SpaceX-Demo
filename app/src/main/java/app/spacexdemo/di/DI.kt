@@ -1,5 +1,6 @@
 package app.spacexdemo.di
 
+import android.util.Log
 import app.spacexdemo.ui.filter.filterScreenModule
 import app.spacexdemo.ui.main.mainScreenModule
 import network.api.SpacexApiService

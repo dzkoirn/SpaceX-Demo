@@ -9,7 +9,7 @@ import spacexdemo.domain.dto.*
 class LaunchesUseCase(
     private val launchesRepo: Repo<List<Launch>>,
     private val rocketsRepo: Repo<List<Rocket>>,
-    private val filterSettings: Repo<FilterSettings>
+    private val filterSettings: Repo<FilterSettings>,
 ) {
     suspend fun getLaunches(): List<LaunchInfo> = coroutineScope {
         val settings = filterSettings.get()

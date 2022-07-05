@@ -14,6 +14,7 @@ import app.spacexdemo.R
 import app.spacexdemo.SpacexDemoViewModelFactory
 import app.spacexdemo.di.DI
 import app.spacexdemo.ui.filter.FilterFragment
+import app.spacexdemo.ui.filter.FilterFragment.Constants.isResultSave
 import app.spacexdemo.ui.info.LaunchInfoDetailFragment
 import app.spacexdemo.ui.main.info.CompanyInfoAdapter
 import app.spacexdemo.ui.main.list.LaunchListAdapter
@@ -37,9 +38,8 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        parentFragmentManager.setFragmentResultListener("filter", this) { _, _ ->
-            // reload data
-            viewModel.loadData()
+        parentFragmentManager.setFragmentResultListener(FilterFragment.FILTER_TAG, this) { requestKey, result ->
+            handleFragmentResult(requestKey, result)
         }
     }
 
@@ -88,9 +88,12 @@ class MainFragment : Fragment() {
                 progress.isVisible = true
             }
             is MainScreenState.ScreenData -> {
+                // Log.d("DEBUG", "handleScreenState MainScreenState.ScreenData, list = ${state.list}")
                 companyInfoAdapter.setCompanyInfo(state.companyInfo)
-                listAdapter.submitList(state.list)
-                progress.isVisible = false
+                listAdapter.submitList(state.list) {
+                    // Log.d("DEBUG", "submitList callback called")
+                    progress.isVisible = false
+                }
             }
         }
     }
@@ -104,7 +107,17 @@ class MainFragment : Fragment() {
     private fun handleMenuClick(): Boolean {
         val instance = FilterFragment()
         instance.setStyle(DialogFragment.STYLE_NORMAL, R.style.ModalDialog)
-        instance.show(parentFragmentManager, "filter")
+        instance.show(parentFragmentManager, FilterFragment.FILTER_TAG)
         return true
+    }
+
+    private fun handleFragmentResult(requestKey: String, result: Bundle) {
+        when(requestKey) {
+            FilterFragment.FILTER_TAG -> if (result.isResultSave()) {
+                // reload data
+                // Log.d("DEBUG", "handleFragmentResult loadData")
+                viewModel.loadData()
+            }
+        }
     }
 }
