@@ -2,7 +2,9 @@ package app.spacexdemo.ui.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -26,6 +28,8 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
+    private lateinit var errorMessage: TextView
+    private lateinit var retryButton: Button
     private lateinit var list: RecyclerView
     protected lateinit var progress: ProgressBar
 
@@ -52,6 +56,11 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        errorMessage = view.findViewById(R.id.error_message)
+        retryButton = view.findViewById<Button?>(R.id.retry_button).apply {
+            setOnClickListener { viewModel.loadData() }
+        }
 
         companyInfoAdapter = CompanyInfoAdapter()
         listAdapter = LaunchListAdapter(::handleListItemClick)
@@ -85,6 +94,8 @@ class MainFragment : Fragment() {
     private fun handleScreenState(state: MainScreenState) {
         when(state) {
             is MainScreenState.Loading -> {
+                errorMessage.isVisible = false
+                retryButton.isVisible = false
                 progress.isVisible = true
             }
             is MainScreenState.ScreenData -> {
@@ -94,6 +105,11 @@ class MainFragment : Fragment() {
                     // Log.d("DEBUG", "submitList callback called")
                     progress.isVisible = false
                 }
+            }
+            is MainScreenState.LoadingError -> {
+                errorMessage.isVisible = true
+                retryButton.isVisible = true
+                progress.isVisible = false
             }
         }
     }

@@ -10,6 +10,8 @@ sealed class MainScreenState {
         val companyInfo: CompanyInfo,
         val list: List<LaunchInfo>
     ) : MainScreenState()
+
+    object LoadingError: MainScreenState()
 }
 
 

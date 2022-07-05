@@ -1,5 +1,6 @@
 package app.spacexdemo.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,12 +22,17 @@ class MainViewModel(
 
     fun loadData() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _state.postValue(MainScreenState.Loading)
-                _state.postValue(MainScreenState.ScreenData(
-                    companyInfoUseCase.getCompanyInfo(),
-                    launchesUseCase.getLaunches()
-                ))
+            try {
+                withContext(Dispatchers.IO) {
+                    _state.postValue(MainScreenState.Loading)
+                    _state.postValue(MainScreenState.ScreenData(
+                        companyInfoUseCase.getCompanyInfo(),
+                        launchesUseCase.getLaunches()
+                    ))
+                }
+            } catch (error: Throwable) {
+                Log.d("DEBUG", "$error")
+                _state.postValue(MainScreenState.LoadingError)
             }
         }
     }

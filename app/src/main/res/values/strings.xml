@@ -14,4 +14,6 @@
     <string name="no_data_available">No any data</string>
     <string name="filter">Filter</string>
     <string name="sorting">Sorting order</string>
+    <string name="retry">Retry</string>
+    <string name="cant_load_data">Can\'t load data. Check your internet connection and try again</string>
 </resources>
